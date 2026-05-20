@@ -1,7 +1,6 @@
 const PR_URL_RE = /^https?:\/\/github\.com\/([^\/?#]+)\/([^\/?#]+)\/pull\/(\d+)/;
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.action.disable();
+function installRules() {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
     chrome.declarativeContent.onPageChanged.addRules([
       {
@@ -9,7 +8,8 @@ chrome.runtime.onInstalled.addListener(() => {
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: {
               hostEquals: "github.com",
-              pathContains: "/pull/",
+              schemes: ["https"],
+              urlMatches: "^https://github\\.com/[^/]+/[^/]+/pull/\\d+",
             },
           }),
         ],
@@ -17,6 +17,16 @@ chrome.runtime.onInstalled.addListener(() => {
       },
     ]);
   });
+}
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.action.disable();
+  installRules();
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  chrome.action.disable();
+  installRules();
 });
 
 chrome.action.onClicked.addListener(async (tab) => {
