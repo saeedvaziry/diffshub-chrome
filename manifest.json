@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Open in Diffshub",
+  "version": "1.0.0",
+  "description": "Opens the current GitHub pull request in diffshub.com for a cleaner diff view.",
+  "permissions": ["declarativeContent", "activeTab"],
+  "action": {
+    "default_title": "Open this PR in Diffshub",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+D",
+        "mac": "Command+Shift+D"
+      },
+      "description": "Open the current GitHub PR in Diffshub"
+    }
+  }
+}
